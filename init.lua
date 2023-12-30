@@ -24,7 +24,16 @@ vim.cmd("set expandtab")             -- Использовать пробелы 
 vim.cmd("set nowrap")                -- Не переносить строки
 vim.cmd("set encoding=utf-8")        -- Кодировка UTF-8
 vim.cmd("set noswapfile")            -- Не создает резервные файлы
+vim.cmd("set scrolloff=7")
+
 vim.g.mapleader = " "
+
+-- vim.api.nvim_create_autocmd("TextYankPost", {
+--   group = augroup "highlight_yank",
+  -- callback = function()
+    -- vim.highlight.on_yank()
+  -- end,
+-- })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -46,6 +55,17 @@ local plugins = {
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+    {
+        "nvim-tree/nvim-tree.lua",
+        version = "*",
+        lazy = false,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        config = function()
+            require("nvim-tree").setup {}
+        end,
+    }
 }
 
 local opts = {}
@@ -55,7 +75,10 @@ require("lazy").setup(plugins, opts)
 local builtin = require("telescope.builtin")
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>qq', ":q!<CR>", {})
+vim.keymap.set('n', '<leader>q', ":qa!<CR>", {})
+
+vim.keymap.set('n', '<leader>e', ":NvimTreeOpen <CR>", {})
+vim.keymap.set('n', '<C-n>', ":NvimTreeToggle <CR>", {})
 
 local config = require("nvim-treesitter.configs")
 config.setup({
