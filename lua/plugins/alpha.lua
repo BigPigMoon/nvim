@@ -26,19 +26,13 @@ return {
 			[[                                                                       ]],
 		}
 
-		_Gopts = {
-			position = "center",
-			hl = "Type",
+		-- _Gopts = {
+			-- position = "center",
+			-- hl = "Type",
 			-- wrap = "overflow";
-		}
+		-- }
 
-		local function footer()
-			return "Haskell can suck mo' nads"
-		end
-
-		dashboard.section.footer.val = footer()
-
-		dashboard.opts.opts.noautocmd = true
+		-- dashboard.opts.opts.noautocmd = true
 		alpha.setup(dashboard.opts)
 	end,
 }
